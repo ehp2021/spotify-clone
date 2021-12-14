@@ -1,8 +1,8 @@
-# spotify-clone
+# Spotify Clone
 
 This Spotify Clone uses Next.js. Next.js is a framework that makes it easy to create 'universal' React apps - React apps that do both client and server side rendering.
 
-# Running locally in development mode
+## Running locally in development mode
 
 To get started, just clone the repository and run `npm install && npm run dev`:
 
