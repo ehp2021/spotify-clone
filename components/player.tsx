@@ -9,7 +9,6 @@ import {
   Center,
   Flex,
   Text,
-  StatHelpText,
 } from '@chakra-ui/react'
 import ReactHowler from 'react-howler'
 import { useEffect, useRef, useState } from 'react'
@@ -54,11 +53,9 @@ const Player = ({ songs, activeSong }) => {
     cancelAnimationFrame(timerId)
   }, [playing, isSeeking])
 
-  //keeping track of what hte active song is 
-  useEffect(()=> {
-
+  useEffect(() => {
     setActiveSong(songs[index])
-  }, [index, setActiveSong, songs ])
+  }, [index, setActiveSong, songs])
 
   useEffect(() => {
     repeatRef.current = repeat
@@ -199,7 +196,7 @@ const Player = ({ songs, activeSong }) => {
               step={0.1}
               min={0}
               id="player-range"
-              max={duration ? duration.toFixed(2) : 0}
+              max={duration ? (duration.toFixed(2) as unknown as number) : 0}
               onChange={onSeek}
               value={[seek]}
               onChangeStart={() => setIsSeeking(true)}
