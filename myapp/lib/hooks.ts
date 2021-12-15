@@ -1,6 +1,6 @@
 import fetcher from './fetcher'
 import useSWR from 'swr'
-import { Playlist } from '@prisma/client'
+
 
 // need some hooks for pulling from api
 // you don't have tomake your own hooks but it makes things eaiser
@@ -8,7 +8,7 @@ import { Playlist } from '@prisma/client'
 export const useMe = () => {
   const { data, error} = useSWR('/me', fetcher)
   // see what data is coming back
-  console.log(data) 
+  console.log(data, 'hooks file') 
 
   return {
     user: data,
