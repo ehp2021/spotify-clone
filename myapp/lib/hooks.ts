@@ -8,7 +8,8 @@ import useSWR from 'swr'
 export const useMe = () => {
   const { data, error} = useSWR('/me', fetcher)
   // see what data is coming back
-  console.log(data, 'hooks file') 
+  console.log(data, 'useMe hook, hooks file') 
+  console.log(error)
 
   return {
     user: data,
@@ -24,6 +25,8 @@ export const useMe = () => {
 
 export const usePlaylist = () => {
   const { data, error} = useSWR('/playlist', fetcher)
+  console.log(data, "player level, hooks.ts")
+  console.log(error)
 
   return {
     playlists: (data as any) || [],

@@ -1,6 +1,6 @@
-import {PrismaClient} from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
-import {artistsData} from './songsData'
+import { artistsData } from './songsData'
 
 const prisma = new PrismaClient()
 
@@ -26,40 +26,38 @@ const run = async () => {
 
   const salt = bcrypt.genSaltSync()
   const user = await prisma.user.upsert({
-  where: {email: 'user@test.com'},
-  update: {},
-  create: {
-    email: 'user@test.com',
-    password: bcrypt.hashSync('password', salt),
-    firstName: "Emily",
-    lastName: "Park",
+    where: { email: 'user@test.com' },
+    update: {},
+    create: {
+      email: 'user@test.com',
+      password: bcrypt.hashSync('password', salt),
+      firstName: 'Em',
+      lastName: 'Pa',
     },
   })
 
   const songs = await prisma.song.findMany({})
-  await Promise.all(new Array(10).fill(1).map((_, i) => {
-    return prisma.playlist.create({
-      data: {
-        name: `Playlist #${i+1}`, 
-        user: {
-          connect: {id: user.id},
+  await Promise.all(
+    new Array(10).fill(1).map(async (_, i) => {
+      return prisma.playlist.create({
+        data: {
+          name: `Playlist #${i + 1}`,
+          user: {
+            connect: { id: user.id },
+          },
+          songs: {
+            connect: songs.map((song) => ({
+              id: song.id,
+            })),
+          },
         },
-        songs: {
-          connect: songs.map((song) => ({
-            id: song.id,
-          })),
-        },
-      }
+      })
     })
-  }))
-
-
-
+  )
 }
 
-
 run()
-  .catch(e=> {
+  .catch((e) => {
     console.error(e)
     process.exit(1)
   })
